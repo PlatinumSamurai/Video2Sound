@@ -1,6 +1,7 @@
 import moviepy.editor
 import sys
 import argparse
+import platform
 
 
 def generate_parser():
@@ -14,6 +15,14 @@ def generate_parser():
 def main():
     parser = generate_parser()
     args = parser.parse_args(sys.argv[1:])
+    delimiter = ""
+
+    if platform.system() == "Linux":
+        delimiter = "/"
+    elif platform.system() == "Windows":
+        delimiter = "\\"
+
+    print("Video2Sound 1.0 Framework")
     
     if args.s is None:
         args.s = input("Path to the video to convert: ")
@@ -22,7 +31,7 @@ def main():
 
     video_file = moviepy.editor.VideoFileClip(args.s)
     audio_file = video_file.audio
-    audio_file.write_audiofile(args.s[:args.s.rfind('\\') + 1] + args.n)
+    audio_file.write_audiofile(args.s[:args.s.rfind(delimiter) + 1] + args.n)
 
     return 0
 

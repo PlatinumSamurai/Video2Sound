@@ -1,0 +1,2 @@
+# Basic framework that is used in this project
+moviepy>=1.0.3
