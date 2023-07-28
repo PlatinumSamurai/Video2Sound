@@ -1,45 +1,29 @@
 import moviepy.editor
 import sys
+import argparse
+
+
+def generate_parser():
+    parsrer = argparse.ArgumentParser()
+    parsrer.add_argument("-s", type=str, help="Source name of the file")
+    parsrer.add_argument("-n", type=str, help="Target name of the file")
+
+    return parsrer
 
 
 def main():
-    video_name = ""
-    audio_name = ""
+    parser = generate_parser()
+    args = parser.parse_args(sys.argv[1:])
+    
+    if args.s is None:
+        args.s = input("Path to the video to convert: ")
+    if args.n is None:
+        args.n = input("Title of the audio to be generated: ")
 
-    if len(sys.argv) == 1:
-        video_name = input("Path to the video to convert: ")
-        video_file = moviepy.editor.VideoFileClip(video_name)
-        audio_file = video_file.audio
-        audio_name = input("Title of the audio to be generated: ")
-        audio_file.write_audiofile(video_name[:video_name.rfind('\\') + 1] + audio_name)
-        return 0
-
-    if 1 < len(sys.argv) < 5:
-        print("Too few parameters. You should execute program as follows: v2s.exe -s *source_file* -n *target_name*")
-        return -1
-    elif len(sys.argv) > 5:
-        print("Too many parameters. You should execute program as follows: v2s.exe -s *source_file* -n *target_name*")
-        return -1
-
-    if sys.argv[1] == "-s":
-        video_name = sys.argv[2]
-    elif sys.argv[1] == "-n":
-        audio_name = sys.argv[2]
-    else:
-        print(f"Incorrect parameter {sys.argv[1]}. You should execute program as follows: v2s.exe -s *source_file* -n *target_name*")
-        return -1
-
-    if sys.argv[3] == "-s":
-        video_name = sys.argv[4]
-    elif sys.argv[3] == "-n":
-        audio_name = sys.argv[4]
-    else:
-        print(f"Incorrect parameter {sys.argv[3]}. You should execute program as follows: v2s.exe -s *source_file* -n *target_name*")
-        return -1
-
-    video_file = moviepy.editor.VideoFileClip(video_name)
+    video_file = moviepy.editor.VideoFileClip(args.s)
     audio_file = video_file.audio
-    audio_file.write_audiofile(video_name[:video_name.rfind('\\') + 1] + audio_name)
+    audio_file.write_audiofile(args.s[:args.s.rfind('\\') + 1] + args.n)
+
     return 0
 
 
