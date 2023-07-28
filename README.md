@@ -6,7 +6,7 @@ Execution
 ---------
 To execute v2s, run the commands below:
 
-`pip3 install -r requirenments.txt`
+`pip3 install -r requirements.txt`
 
 `./v2s.py` if you are using Linux or `python v2s.py` if you are using Windows.
 
